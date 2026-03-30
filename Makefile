@@ -1,5 +1,9 @@
 NAME = cub3d
-SRCS = ./srcs/main.c \
+SRCS =	./srcs/main.c \
+		./srcs/rendering/render_utils.c \
+		./srcs/rendering/input.c \
+		./srcs/rendering/rendering.c \
+		./srcs/rendering/movement.c
 
 OBJS = ${SRCS:.c=.o}
 CC = gcc

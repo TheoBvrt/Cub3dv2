@@ -15,7 +15,7 @@
 
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
-
+# include <sys/time.h>
 # include "math.h"
 # include "stdio.h"
 
@@ -38,6 +38,16 @@
 #  define PLUS_KEY 61
 # endif
 
+# ifndef SCREEN_SETTINGS
+#  define WIDTH 1920
+#  define HEIGHT 1080
+# endif
+
+# ifndef GAME_SETTINGS
+#  define MOVESPEED 5
+#  define TURNSPEED 2
+# endif
+
 typedef struct s_image
 {
 	void	*img;
@@ -55,16 +65,37 @@ typedef struct s_rendering
 	double dirY;
 	double planeX;
 	double planeY;
-	double time;
-	double oldTime;
+	double lastTime;
+	double deltaTime;
 }	t_rendering;
+
+typedef struct s_keydown
+{
+	int	key_w;
+	int	key_s;
+	int	key_a;
+	int	key_d;
+}	t_keydown;
 
 typedef struct s_cube
 {
 	t_image		*image;
 	t_rendering	rendering;
+	t_keydown	keydown;
 	void	*mlx;
 	void	*mlx_win;
 }	t_cube;
+
+void	render(t_cube *cube);
+int		on_keydown(int keycode, t_cube *cube);
+int		on_keyrelease(int keycode, t_cube *cube);
+void	draw_verline(int start_x, int start_y, int end_y, t_cube *cube, int color);
+void	my_mlx_pixel_put(t_image *image, int x, int y, int color);
+void	forward(t_cube *cube);
+void	backward(t_cube *cube);
+void	turn_left(t_cube *cube);
+void	turn_right(t_cube *cube);
+int	update(t_cube *cube);
+int	on_keyrelease(int keycode, t_cube *cube);
 
 #endif
