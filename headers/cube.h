@@ -67,6 +67,12 @@ typedef struct s_rendering
 	double planeY;
 	double lastTime;
 	double deltaTime;
+	char	*n_texture;
+	char	*s_texture;
+	char	*w_texture;
+	char	*e_texture;
+	char	*f_color;
+	char	*c_color;
 }	t_rendering;
 
 typedef struct s_keydown
@@ -102,5 +108,6 @@ int	on_keyrelease(int keycode, t_cube *cube);
 int	check_map_file(char *map_path);
 int	parse_map(char *map_path, t_cube *cube);
 int	get_file_size(char *map_path);
+int	first_check_map(t_cube *cube);
 
 #endif
