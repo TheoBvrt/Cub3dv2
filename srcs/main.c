@@ -39,12 +39,32 @@ int	init(t_cube *cube, t_image *image)
 	mlx_loop(cube->mlx);
 }
 
+void	clean_all(t_cube *cube)
+{
+	int	index;
+
+	index = 0;
+	while (index < cube->map_size)
+		free(cube->parsed_file[index ++]);
+	free(cube->parsed_file);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_cube	cube;
 	t_image	image;
 
-	if (!init(&cube, &image))
-		return (1);
+	if (argc != 2)
+	{
+		ft_printf("Error : ./cub3d <map.cub>");
+		return (0);
+	}
+	if (!check_map_file(argv[1]))
+		return (0);
+	if (!parse_map(argv[1], &cube))
+	 	return (0);
+
+	// if (!init(&cube, &image))
+	// 	return (1);
 	return (1);
 }

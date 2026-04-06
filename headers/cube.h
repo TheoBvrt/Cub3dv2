@@ -82,8 +82,10 @@ typedef struct s_cube
 	t_image		*image;
 	t_rendering	rendering;
 	t_keydown	keydown;
+	int		map_size;
 	void	*mlx;
 	void	*mlx_win;
+	char	**parsed_file;
 }	t_cube;
 
 void	render(t_cube *cube);
@@ -97,5 +99,8 @@ void	turn_left(t_cube *cube);
 void	turn_right(t_cube *cube);
 int	update(t_cube *cube);
 int	on_keyrelease(int keycode, t_cube *cube);
+int	check_map_file(char *map_path);
+int	parse_map(char *map_path, t_cube *cube);
+int	get_file_size(char *map_path);
 
 #endif

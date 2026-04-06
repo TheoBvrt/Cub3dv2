@@ -1,6 +1,6 @@
 #include "cube.h"
 
-void	draw(t_cube *cube)
+void	raycasting(t_cube *cube)
 {
 	int worlMap[24][24]=
 	{
@@ -131,6 +131,28 @@ void	draw(t_cube *cube)
 
 }
 
+void	draw_celling_and_ground(t_cube *cube)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			if (y < HEIGHT / 2)
+				my_mlx_pixel_put(cube->image, x, y, 0x03f8fc);
+			else
+				my_mlx_pixel_put(cube->image, x, y, 0x67fc03);
+	
+			x ++;
+		}
+		y ++;
+	}
+}
+
 void	clear_screen(t_cube *cube)
 {
 	mlx_destroy_image(cube->mlx, cube->image->img);
@@ -143,7 +165,8 @@ void	clear_screen(t_cube *cube)
 void	render(t_cube *cube)
 {
 	clear_screen(cube);
-	draw(cube);
+	draw_celling_and_ground(cube);
+	raycasting(cube);
 
 	mlx_put_image_to_window(cube->mlx, cube->mlx_win, cube->image->img, 0, 0);
 }

@@ -3,7 +3,10 @@ SRCS =	./srcs/main.c \
 		./srcs/rendering/render_utils.c \
 		./srcs/rendering/input.c \
 		./srcs/rendering/rendering.c \
-		./srcs/rendering/movement.c
+		./srcs/rendering/movement.c \
+		./srcs/parsing/parse_map.c \
+		./srcs/parsing/error_checker.c \
+		./srcs/parsing/parser_utils.c
 
 OBJS = ${SRCS:.c=.o}
 CC = gcc
