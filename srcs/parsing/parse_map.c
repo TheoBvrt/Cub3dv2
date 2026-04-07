@@ -21,7 +21,7 @@ int	parse_map(char *map_path, t_cube *cube)
 	cube->parsed_file[index] = get_next_line(fd);
 	while (cube->parsed_file[index])
 		cube->parsed_file[++ index] = get_next_line(fd);
-	if (!first_check_map(cube))
+	if (!check_map(cube))
 	{
 		ft_printf("Error\n");
 		return (0);

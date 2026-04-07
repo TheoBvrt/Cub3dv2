@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thbouver <thbouver@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 21:41:21 by theo              #+#    #+#             */
-/*   Updated: 2025/11/07 16:26:45 by thbouver         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:14:37 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ void	turn_left(t_cube *cube);
 void	turn_right(t_cube *cube);
 int	update(t_cube *cube);
 int	on_keyrelease(int keycode, t_cube *cube);
-int	check_map_file(char *map_path);
+int	check_file_type(char *map_path);
 int	parse_map(char *map_path, t_cube *cube);
 int	get_file_size(char *map_path);
-int	first_check_map(t_cube *cube);
+int	check_map(t_cube *cube);
 
 #endif

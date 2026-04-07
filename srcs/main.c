@@ -59,7 +59,8 @@ int	main(int argc, char *argv[])
 		ft_printf("Error : ./cub3d <map.cub>");
 		return (0);
 	}
-	if (!check_map_file(argv[1]))
+	cube.mlx = mlx_init();
+	if (!check_file_type(argv[1]))
 		return (0);
 	if (!parse_map(argv[1], &cube))
 	 	return (0);
