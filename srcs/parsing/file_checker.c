@@ -69,9 +69,9 @@ static int	check_color(char *str, char *prefix, t_cube *cube)
 	return (1);
 }
 
-int	check_map(t_cube *cube)
+int	check_file(t_cube *cube)
 {
-	if (cube->map_size <= 8)
+	if (cube->map_size <= 9)
 		return (0);
 	if (ft_strlen(cube->parsed_file[4]) != 1 && cube->parsed_file[4][0] != '\n')
 		return (0);
@@ -83,9 +83,6 @@ int	check_map(t_cube *cube)
 		|| !check_texture(cube->parsed_file[3], "EA ", cube))
 		return (0);
 	if (!check_color(cube->parsed_file[5], "F ", cube))
-		return (0);
-	cube->max_length = get_max_length(cube);
-	if (!check_game_map_format(cube))
 		return (0);
 	return (1);
 }

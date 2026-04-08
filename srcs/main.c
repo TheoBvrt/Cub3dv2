@@ -15,8 +15,8 @@ int	init(t_cube *cube, t_image *image)
 	gettimeofday(&tv, NULL);
 	cube->rendering.lastTime = (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
 
-	cube->rendering.posX = 12;
-	cube->rendering.posY = 17;
+	cube->rendering.posX = 5;
+	cube->rendering.posY = 5;
 	cube->rendering.dirX = -1;
 	cube->rendering.dirY = 0;
 	cube->rendering.planeX = 0;
@@ -65,10 +65,10 @@ int	main(int argc, char *argv[])
 	if (!check_file_type(argv[1]))
 		return (0);
 	if (!parse_map(argv[1], &cube))
-	 	return (clean_all(&cube), 0);
+	 	return (0);
 
-	// if (!init(&cube, &image))
-	// 	return (1);
+	if (!init(&cube, &image))
+		return (1);
 	clean_all(&cube);
 	return (1);
 }

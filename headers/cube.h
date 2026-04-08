@@ -90,7 +90,7 @@ typedef struct s_cube
 	t_rendering	rendering;
 	t_keydown	keydown;
 	int		map_size;
-	int		max_length;
+	int		map_length;
 	void	*mlx;
 	void	*mlx_win;
 	char	**parsed_file;
@@ -110,7 +110,8 @@ int	on_keyrelease(int keycode, t_cube *cube);
 int	check_file_type(char *map_path);
 int	parse_map(char *map_path, t_cube *cube);
 int	get_file_size(char *map_path);
-int	check_map(t_cube *cube);
+int	check_file(t_cube *cube);
+int	check_game_map(t_cube *cube);
 void	free_tab(char **tab);
 int	get_max_length(t_cube *cube);
 

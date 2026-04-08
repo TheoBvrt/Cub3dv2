@@ -1,35 +1,7 @@
 #include "cube.h"
 
 void	raycasting(t_cube *cube)
-{
-	int worlMap[24][24]=
-	{
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-		{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-		{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-	};
-	
+{	
 	int	x = 0;
 	while (x < WIDTH)
 	{
@@ -88,7 +60,7 @@ void	raycasting(t_cube *cube)
 				mapY += stepY;
 				side = 1;
 			}
-			if (worlMap[mapX][mapY] > 0) hit = 1;
+			if (cube->rendering.map[mapX][mapY] > 0) hit = 1;
 		} 
 		if(side == 0)
 			perpWallDist = (sideDistX - deltaDistX);
@@ -102,33 +74,35 @@ void	raycasting(t_cube *cube)
 		int drawEnd = lineHeight / 2 + HEIGHT / 2;
 		if(drawEnd >= HEIGHT)drawEnd = HEIGHT - 1;
 
-		int color;
-		switch(worlMap[mapX][mapY])
+		if (cube->rendering.map[mapX][mapY] != -1)
 		{
-			case 1:  color = 0xFF0000; break; // rouge
-			case 2:  color = 0x00FF00; break; // vert
-			case 3:  color = 0x0000FF; break; // bleu
-			case 4:  color = 0xFFFFFF; break; // blanc
-			default: color = 0xFFFF00; break; // jaune
+			int color;
+			switch(cube->rendering.map[mapX][mapY])
+			{
+				case 1:  color = 0xFF0000; break; // rouge
+				case 2:  color = 0x00FF00; break; // vert
+				case 3:  color = 0x0000FF; break; // bleu
+				case 4:  color = 0xFFFFFF; break; // blanc
+				default: color = 0xFFFF00; break; // jaune
+			}
+
+			if (side == 1)
+				{color = color / 2;}
+
+			draw_verline(x, drawStart, drawEnd, cube, color);
 		}
-
-		if (side == 1)
-			{color = color / 2;}
-
-		draw_verline(x, drawStart, drawEnd, cube, color);
 		x ++;
 	}
 
 
-		struct timeval tv;
+	struct timeval tv;
 
-		gettimeofday(&tv, NULL);
+	gettimeofday(&tv, NULL);
 
-		double curtime = (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
-		cube->rendering.deltaTime = (curtime - cube->rendering.lastTime);
-		cube->rendering.lastTime = curtime;
-		printf("(%f)", cube->rendering.deltaTime);
-
+	double curtime = (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
+	cube->rendering.deltaTime = (curtime - cube->rendering.lastTime);
+	cube->rendering.lastTime = curtime;
+	printf("(%f)", cube->rendering.deltaTime);
 }
 
 void	draw_celling_and_ground(t_cube *cube)
