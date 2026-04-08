@@ -24,8 +24,7 @@ static void	parse_game_map(t_cube *cube)
 						= cube->parsed_file[f_y][f_x] - 48;
 				else
 				{
-					cube->rendering.posY = f_x + 0.5;
-					cube->rendering.posX = f_y - 7;
+					set_start_position(f_y, f_x, cube);
 					cube->rendering.map[g_y][g_x] = 0;
 				}
 			}
@@ -106,6 +105,8 @@ int	parse_map(char *map_path, t_cube *cube)
 		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
 	cube->map_length = get_max_length(cube);
 	if (!alloc_map_table(cube))
+		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
+	if (!check_map_format(cube))
 		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
 	parse_game_map(cube);
 	if (!check_game_map(cube))

@@ -43,6 +43,13 @@
 #  define HEIGHT 1080
 # endif
 
+# ifndef ORIENTATION
+#  define N 0
+#  define S 1
+#  define W 2
+#  define E 3
+# endif
+
 # ifndef GAME_SETTINGS
 #  define MOVESPEED 5
 #  define TURNSPEED 2
@@ -89,6 +96,7 @@ typedef struct s_cube
 	t_image		*image;
 	t_rendering	rendering;
 	t_keydown	keydown;
+	int		orientation;
 	int		map_size;
 	int		map_length;
 	void	*mlx;
@@ -115,4 +123,8 @@ int	check_game_map(t_cube *cube);
 void	free_tab(char **tab);
 void	free_game_map(t_cube *cube);
 int	get_max_length(t_cube *cube);
+void	set_start_position(int y, int x, t_cube *cube);
+int	is_valid_map_char(char c);
+
+int	check_map_format(t_cube *cube);
 #endif

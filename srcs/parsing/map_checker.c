@@ -15,6 +15,55 @@ static int	check_neighbor(int y, int x, t_cube *cube)
 	return (1);
 }
 
+static int	check_start_position(t_cube *cube)
+{
+	int	counter;
+	int	y;
+	int	x;
+
+	y = 8;
+	counter = 0;
+	while (y < cube->map_size - 8)
+	{
+		x = 0;
+		while (x < cube->map_length)
+		{
+			if (cube->parsed_file[y][x] == 'N'
+				|| cube->parsed_file[y][x] == 'S'
+				|| cube->parsed_file[y][x] == 'W'
+				|| cube->parsed_file[y][x] == 'E')
+				counter ++;
+			x ++;
+		}
+		y ++;
+	}
+	if (counter != 1)
+		return (0);
+	return (1);
+}
+
+int	check_map_format(t_cube *cube)
+{
+	int	y;
+	int	x;
+
+	y = 8;
+	while (cube->parsed_file[y])
+	{
+		x = 0;
+		while (cube->parsed_file[y][x])
+		{
+			if (!is_valid_map_char(cube->parsed_file[y][x]))
+				return (0);
+			x ++;
+		}
+		y ++;
+	}
+	if (!check_start_position(cube))
+		return (0);
+	return (1);
+}
+
 int	check_game_map(t_cube *cube)
 {
 	int	y;
