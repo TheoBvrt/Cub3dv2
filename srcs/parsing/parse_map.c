@@ -1,6 +1,6 @@
 #include "cube.h"
 
-static int	parse_game_map(t_cube *cube)
+static void	parse_game_map(t_cube *cube)
 {
 	int	g_x;
 	int	g_y;
@@ -23,7 +23,11 @@ static int	parse_game_map(t_cube *cube)
 					cube->rendering.map[g_y][g_x]
 						= cube->parsed_file[f_y][f_x] - 48;
 				else
+				{
+					cube->rendering.posY = f_x + 0.5;
+					cube->rendering.posX = f_y - 7;
 					cube->rendering.map[g_y][g_x] = 0;
+				}
 			}
 			f_x ++;
 			g_x ++;
@@ -90,27 +94,22 @@ int	parse_map(char *map_path, t_cube *cube)
 	index = 0;
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1 || fd == 0)
-		return (ft_printf("Error\nMap error"), 0);
+		return (ft_printf("Error\n"), 0);
 	cube->map_size = get_file_size(map_path);
 	cube->parsed_file = ft_calloc(cube->map_size + 1, sizeof(char *));
 	if (!cube->parsed_file)
 		return (0);
-
 	cube->parsed_file[index] = get_next_line(fd);
 	while (cube->parsed_file[index])
 		cube->parsed_file[++ index] = get_next_line(fd);
-
 	if (!check_file(cube))
-		return (ft_printf("Error\n"), 0);
-
+		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
 	cube->map_length = get_max_length(cube);
-
 	if (!alloc_map_table(cube))
-		return (0);
+		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
 	parse_game_map(cube);
-
 	if (!check_game_map(cube))
-		return (ft_printf("Error\n"), 0);
-
+		return (free_tab(cube->parsed_file),
+			free_game_map(cube), ft_printf("Error\n"), 0);
 	return (close(fd), 1);
 }

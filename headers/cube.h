@@ -113,6 +113,6 @@ int	get_file_size(char *map_path);
 int	check_file(t_cube *cube);
 int	check_game_map(t_cube *cube);
 void	free_tab(char **tab);
+void	free_game_map(t_cube *cube);
 int	get_max_length(t_cube *cube);
-
 #endif

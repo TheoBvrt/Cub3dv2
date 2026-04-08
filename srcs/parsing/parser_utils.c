@@ -35,16 +35,7 @@ int	get_file_size(char *map_path)
 		line = get_next_line(fd);
 		size ++;
 	}
+	free (line);
 	close(fd);
 	return (size);
-}
-
-void	free_tab(char **tab)
-{
-	int	index;
-
-	index = 0;
-	while (tab[index])
-		free(tab[index ++]);
-	free (tab);
 }

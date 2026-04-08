@@ -9,7 +9,7 @@ void	forward(t_cube *cube)
 void	backward(t_cube *cube)
 {
 	cube->rendering.posX -= cube->rendering.dirX * (MOVESPEED * cube->rendering.deltaTime);
-	cube->rendering.posY -= cube->rendering.dirY *( MOVESPEED * cube->rendering.deltaTime);
+	cube->rendering.posY -= cube->rendering.dirY * (MOVESPEED * cube->rendering.deltaTime);
 }
 
 void	turn_left(t_cube *cube)

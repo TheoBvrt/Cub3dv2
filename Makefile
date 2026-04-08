@@ -7,7 +7,8 @@ SRCS =	./srcs/main.c \
 		./srcs/parsing/parse_map.c \
 		./srcs/parsing/file_checker.c \
 		./srcs/parsing/parser_utils.c \
-		./srcs/parsing/map_checker.c
+		./srcs/parsing/map_checker.c \
+		./srcs/utils/utils.c
 
 OBJS = ${SRCS:.c=.o}
 CC = gcc

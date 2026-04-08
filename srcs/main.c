@@ -15,8 +15,6 @@ int	init(t_cube *cube, t_image *image)
 	gettimeofday(&tv, NULL);
 	cube->rendering.lastTime = (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
 
-	cube->rendering.posX = 5;
-	cube->rendering.posY = 5;
 	cube->rendering.dirX = -1;
 	cube->rendering.dirY = 0;
 	cube->rendering.planeX = 0;
@@ -51,6 +49,12 @@ void	clean_all(t_cube *cube)
 	free(cube->mlx);
 }
 
+void	clean_mlx(t_cube *cube)
+{
+	mlx_destroy_display(cube->mlx);
+	free(cube->mlx);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_cube	cube;
@@ -61,11 +65,12 @@ int	main(int argc, char *argv[])
 		ft_printf("Error : ./cub3d <map.cub>");
 		return (0);
 	}
-	cube.mlx = mlx_init();
 	if (!check_file_type(argv[1]))
 		return (0);
+
+	cube.mlx = mlx_init();
 	if (!parse_map(argv[1], &cube))
-	 	return (0);
+	 	return (clean_mlx(&cube), 0);
 
 	if (!init(&cube, &image))
 		return (1);

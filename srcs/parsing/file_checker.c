@@ -84,6 +84,8 @@ int	check_file(t_cube *cube)
 		return (0);
 	if (!check_color(cube->parsed_file[5], "F ", cube))
 		return (0);
+	if (!check_color(cube->parsed_file[6], "C ", cube))
+		return (0);
 	return (1);
 }
 
