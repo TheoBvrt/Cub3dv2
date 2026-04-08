@@ -47,6 +47,8 @@ void	clean_all(t_cube *cube)
 	while (index < cube->map_size)
 		free(cube->parsed_file[index ++]);
 	free(cube->parsed_file);
+	mlx_destroy_display(cube->mlx);
+	free(cube->mlx);
 }
 
 int	main(int argc, char *argv[])
@@ -63,9 +65,10 @@ int	main(int argc, char *argv[])
 	if (!check_file_type(argv[1]))
 		return (0);
 	if (!parse_map(argv[1], &cube))
-	 	return (0);
+	 	return (clean_all(&cube), 0);
 
 	// if (!init(&cube, &image))
 	// 	return (1);
+	clean_all(&cube);
 	return (1);
 }

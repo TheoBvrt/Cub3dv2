@@ -29,7 +29,7 @@ static int	check_color_format(char *str)
 	int	index;
 
 	index = 0;
-	comas_counter;
+	comas_counter = 0;
 	while (str[index])
 	{
 		if (str[index] == ',')
@@ -38,26 +38,33 @@ static int	check_color_format(char *str)
 			return (0);
 		index ++;
 	}
-	if (comas_counter != 3)
+	if (comas_counter != 2)
 		return (0);
 	return (1);
 }
 
 static int	check_color(char *str, char *prefix, t_cube *cube)
 {
-	int		color[3];
 	char	*tmp;
-	char	**extracted_values;
+	char	**values;
 
-	if (ft_strlen(str) <= 4)
+	if (ft_strlen(str) <= 3)
 		return (0);
-	if (ft_strncmp(str, prefix, 3) == 0)
+	if (ft_strncmp(str, prefix, 2) == 0)
 	{
-		tmp = ft_substr(str, 3, ft_strlen(str) - 4);
+		tmp = ft_substr(str, 2, ft_strlen(str) - 3);
 		if (!tmp)
 			return (0);
 		if (!check_color_format(tmp))
 			return(free(tmp), 0);
+		values = ft_split(tmp, ',');
+		if (!values)
+			return(free(tmp), 0);
+		if (ft_atoi(values[0]) > 255 || ft_atoi(values[1]) > 255
+			|| ft_atoi(values[2]) > 255)
+			return (free(tmp), free_tab(values), 0);
+		free (tmp);
+		free_tab(values);
 	}
 	return (1);
 }
@@ -74,6 +81,11 @@ int	check_map(t_cube *cube)
 		|| !check_texture(cube->parsed_file[1], "SO ", cube)
 		|| !check_texture(cube->parsed_file[2], "WE ", cube)
 		|| !check_texture(cube->parsed_file[3], "EA ", cube))
+		return (0);
+	if (!check_color(cube->parsed_file[5], "F ", cube))
+		return (0);
+	cube->max_length = get_max_length(cube);
+	if (!check_game_map_format(cube))
 		return (0);
 	return (1);
 }

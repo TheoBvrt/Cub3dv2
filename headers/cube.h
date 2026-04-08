@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 21:41:21 by theo              #+#    #+#             */
-/*   Updated: 2026/04/07 12:14:37 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/07 18:32:44 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,15 @@ typedef struct s_image
 
 typedef struct s_rendering
 {
-	double posX;
-	double posY;
-	double dirX;
-	double dirY;
-	double planeX;
-	double planeY;
-	double lastTime;
-	double deltaTime;
+	int		**map;
+	double	posX;
+	double	posY;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
+	double	lastTime;
+	double	deltaTime;
 	char	*n_texture;
 	char	*s_texture;
 	char	*w_texture;
@@ -89,6 +90,7 @@ typedef struct s_cube
 	t_rendering	rendering;
 	t_keydown	keydown;
 	int		map_size;
+	int		max_length;
 	void	*mlx;
 	void	*mlx_win;
 	char	**parsed_file;
@@ -109,5 +111,7 @@ int	check_file_type(char *map_path);
 int	parse_map(char *map_path, t_cube *cube);
 int	get_file_size(char *map_path);
 int	check_map(t_cube *cube);
+void	free_tab(char **tab);
+int	get_max_length(t_cube *cube);
 
 #endif
