@@ -131,8 +131,9 @@ void	clear_screen(t_cube *cube)
 {
 	mlx_destroy_image(cube->mlx, cube->image->img);
 	cube->image->img = mlx_new_image(cube->mlx, WIDTH, HEIGHT);
-	cube->image->addr = mlx_get_data_addr(cube->image->img, &cube->image->bits_per_pixel,
-		&cube->image->line_length, &cube->image->endian);
+	cube->image->addr = mlx_get_data_addr(cube->image->img,
+		&cube->image->bits_per_pixel, &cube->image->line_length,
+		&cube->image->endian);
 }
 
 //main loop

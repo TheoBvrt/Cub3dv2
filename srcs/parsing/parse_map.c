@@ -61,30 +61,6 @@ static int	alloc_map_table(t_cube *cube)
 	return (1);
 }
 
-static void	print_map(t_cube *cube)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	x = 0;
-	while (y < cube->map_size - 8)
-	{
-		x = 0;
-		while (x < cube->map_length)
-		{
-			ft_printf("%d", cube->rendering.map[y][x]);
-			if (cube->rendering.map[y][x] == -1)
-				ft_printf(" ");
-			else
-				ft_printf("  ");
-			x ++;
-		}
-		ft_printf("\n");
-		y ++;
-	}
-}
-
 int	get_file_lines(char *map_path, t_cube *cube)
 {
 	int	index;
