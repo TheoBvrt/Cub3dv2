@@ -19,7 +19,8 @@ static int	check_texture(char *str, char *prefix, t_cube *cube)
 			return (free (path), 0);
 		mlx_destroy_image(cube->mlx, img);
 		free (path);
-	}
+	} else
+		return (0);
 	return (1);
 }
 
@@ -65,7 +66,8 @@ static int	check_color(char *str, char *prefix, t_cube *cube)
 			return (free(tmp), free_tab(values), 0);
 		free (tmp);
 		free_tab(values);
-	}
+	} else
+		return (0);
 	return (1);
 }
 

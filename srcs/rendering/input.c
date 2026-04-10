@@ -23,6 +23,8 @@ int	on_keydown(int keycode, t_cube *cube)
 		cube->keydown.key_a = 1;
 	if (keycode == D_KEY)
 		cube->keydown.key_d = 1;
+	if (keycode == ESCAPE)
+		exit_cub3d(cube);
 	return (1);
 }
 

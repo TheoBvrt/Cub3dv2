@@ -41,3 +41,11 @@ int	is_valid_map_char(char c)
 		return (1);
 	return (0);
 }
+
+double	myabs(double x)
+{
+	if (x >= 0)
+		return (x);
+	else
+		return (x * -1);
+}

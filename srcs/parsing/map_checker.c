@@ -26,7 +26,7 @@ static int	check_start_position(t_cube *cube)
 	while (y < cube->map_size - 8)
 	{
 		x = 0;
-		while (x < cube->map_length)
+		while (cube->parsed_file[y][x])
 		{
 			if (cube->parsed_file[y][x] == 'N'
 				|| cube->parsed_file[y][x] == 'S'

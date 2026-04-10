@@ -85,10 +85,10 @@ static void	print_map(t_cube *cube)
 	}
 }
 
-int	parse_map(char *map_path, t_cube *cube)
+int	get_file_lines(char *map_path, t_cube *cube)
 {
-	int		index;
-	int		fd;
+	int	index;
+	int	fd;
 
 	index = 0;
 	fd = open(map_path, O_RDONLY);
@@ -97,20 +97,30 @@ int	parse_map(char *map_path, t_cube *cube)
 	cube->map_size = get_file_size(map_path);
 	cube->parsed_file = ft_calloc(cube->map_size + 1, sizeof(char *));
 	if (!cube->parsed_file)
+		return (close(fd));
+	if (!cube->parsed_file)
 		return (0);
 	cube->parsed_file[index] = get_next_line(fd);
 	while (cube->parsed_file[index])
-		cube->parsed_file[++ index] = get_next_line(fd);
+		cube->parsed_file[++index] = get_next_line(fd);
+	close(fd);
+	return (1);
+}
+
+int	parse_map(char *map_path, t_cube *cube)
+{
+	if (!get_file_lines(map_path, cube))
+		return (0);
 	if (!check_file(cube))
 		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
 	cube->map_length = get_max_length(cube);
-	if (!alloc_map_table(cube))
-		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
 	if (!check_map_format(cube))
+		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
+	if (!alloc_map_table(cube))
 		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
 	parse_game_map(cube);
 	if (!check_game_map(cube))
 		return (free_tab(cube->parsed_file),
 			free_game_map(cube), ft_printf("Error\n"), 0);
-	return (close(fd), 1);
+	return (1);
 }

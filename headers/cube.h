@@ -125,6 +125,8 @@ void	free_game_map(t_cube *cube);
 int	get_max_length(t_cube *cube);
 void	set_start_position(int y, int x, t_cube *cube);
 int	is_valid_map_char(char c);
-
+void	clean_mlx(t_cube *cube);
+int	exit_cub3d(t_cube *cube);
+double	myabs(double x);
 int	check_map_format(t_cube *cube);
 #endif
