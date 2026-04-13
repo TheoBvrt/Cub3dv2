@@ -14,7 +14,6 @@ static int	check_neighbor(int y, int x, t_cube *cube)
 		return (0);
 	return (1);
 }
-
 static int	check_start_position(t_cube *cube)
 {
 	int	counter;
@@ -23,10 +22,11 @@ static int	check_start_position(t_cube *cube)
 
 	y = 8;
 	counter = 0;
-	while (y < cube->map_size - 8)
+
+	while (y < cube->map_size)
 	{
 		x = 0;
-		while (cube->parsed_file[y][x])
+		while (x < cube->map_length)
 		{
 			if (cube->parsed_file[y][x] == 'N'
 				|| cube->parsed_file[y][x] == 'S'
@@ -42,6 +42,7 @@ static int	check_start_position(t_cube *cube)
 	return (1);
 }
 
+
 int	check_map_format(t_cube *cube)
 {
 	int	y;
@@ -54,13 +55,13 @@ int	check_map_format(t_cube *cube)
 		while (cube->parsed_file[y][x])
 		{
 			if (!is_valid_map_char(cube->parsed_file[y][x]))
-				return (0);
+				return (ft_printf("Error\n -> Invalid character\n"), 0);
 			x ++;
 		}
 		y ++;
 	}
 	if (!check_start_position(cube))
-		return (0);
+		return (ft_printf("Error\n -> Start position error\n"), 0);
 	return (1);
 }
 
@@ -79,7 +80,7 @@ int	check_game_map(t_cube *cube)
 				&& cube->rendering.map[y][x] != 1)
 			{
 				if (!check_neighbor(y, x, cube))
-					return (0);
+					return (ft_printf("Error\n -> Map format error\n"), 0);
 			}
 			x ++;
 		}

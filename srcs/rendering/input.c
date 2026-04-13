@@ -40,3 +40,9 @@ int	on_keyrelease(int keycode, t_cube *cube)
 		cube->keydown.key_d = 0;
 	return (1);
 }
+
+int	on_cross_click(t_cube *cube)
+{
+	exit_cub3d(cube);
+	return (1);
+}

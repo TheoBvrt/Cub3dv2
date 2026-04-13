@@ -104,6 +104,37 @@ typedef struct s_cube
 	char	**parsed_file;
 }	t_cube;
 
+typedef struct s_raycasting
+{
+	int				x;
+	int				map_x;
+	int				map_y;	
+	int				step_x;
+	int				step_y;
+	int				hit;
+	int				side;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	int				tex_x;
+	int				bpp;
+	int				sl;
+	int				end;
+	unsigned int	color;
+	double			text_pos;
+	double			step;
+	double			wall_x;
+	double			camera_x;
+	double			ray_dir_x;
+	double			ray_dir_y;
+	double			perp_wall_dist;
+	double			delta_dist_x;
+	double			delta_dist_y;
+	double			side_dist_x;
+	double			side_dist_y;
+	char			*tex_data;
+}	t_raycasting;
+
 void	render(t_cube *cube);
 int		on_keydown(int keycode, t_cube *cube);
 int		on_keyrelease(int keycode, t_cube *cube);
@@ -128,5 +159,6 @@ int	is_valid_map_char(char c);
 void	clean_mlx(t_cube *cube);
 int	exit_cub3d(t_cube *cube);
 double	myabs(double x);
+int	on_cross_click(t_cube *cube);
 int	check_map_format(t_cube *cube);
 #endif

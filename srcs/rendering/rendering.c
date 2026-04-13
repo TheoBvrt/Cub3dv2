@@ -1,5 +1,17 @@
 #include "cube.h"
 
+void	calculate_deltatime(t_cube *cube)
+{
+	struct timeval	tv;
+	double			curtime;
+
+	gettimeofday(&tv, NULL);
+	curtime = (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
+	cube->rendering.deltaTime = (curtime - cube->rendering.lastTime);
+	cube->rendering.lastTime = curtime;
+}
+
+
 void	raycasting(t_cube *cube)
 {	
 	int	x = 0;
@@ -93,16 +105,7 @@ void	raycasting(t_cube *cube)
 		}
 		x ++;
 	}
-
-
-	struct timeval tv;
-
-	gettimeofday(&tv, NULL);
-
-	double curtime = (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
-	cube->rendering.deltaTime = (curtime - cube->rendering.lastTime);
-	cube->rendering.lastTime = curtime;
-	printf("(%f)", cube->rendering.deltaTime);
+	calculate_deltatime(cube);
 }
 
 void	draw_celling_and_ground(t_cube *cube)

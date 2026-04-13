@@ -88,15 +88,15 @@ int	parse_map(char *map_path, t_cube *cube)
 	if (!get_file_lines(map_path, cube))
 		return (0);
 	if (!check_file(cube))
-		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
+		return (free_tab(cube->parsed_file), 0);
 	cube->map_length = get_max_length(cube);
 	if (!check_map_format(cube))
-		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
+		return (free_tab(cube->parsed_file), 0);
 	if (!alloc_map_table(cube))
-		return (free_tab(cube->parsed_file), ft_printf("Error\n"), 0);
+		return (free_tab(cube->parsed_file), 0);
 	parse_game_map(cube);
 	if (!check_game_map(cube))
 		return (free_tab(cube->parsed_file),
-			free_game_map(cube), ft_printf("Error\n"), 0);
+			free_game_map(cube), 0);
 	return (1);
 }

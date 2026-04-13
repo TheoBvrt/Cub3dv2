@@ -20,7 +20,7 @@ static int	check_texture(char *str, char *prefix, t_cube *cube)
 		mlx_destroy_image(cube->mlx, img);
 		free (path);
 	} else
-		return (0);
+		return (ft_printf("Error\n -> Texture error\n"), 0);
 	return (1);
 }
 
@@ -40,7 +40,7 @@ static int	check_color_format(char *str)
 		index ++;
 	}
 	if (comas_counter != 2)
-		return (0);
+		return (ft_printf("Error\n -> Color error\n"), 0);
 	return (1);
 }
 
@@ -67,27 +67,27 @@ static int	check_color(char *str, char *prefix, t_cube *cube)
 		free (tmp);
 		free_tab(values);
 	} else
-		return (0);
+		return (ft_printf("Error\n -> Color error\n"), 0);
 	return (1);
 }
 
 int	check_file(t_cube *cube)
 {
 	if (cube->map_size <= 9)
-		return (0);
+		return (ft_printf("Error\n -> Map format error\n"), 0);
 	if (ft_strlen(cube->parsed_file[4]) != 1 && cube->parsed_file[4][0] != '\n')
-		return (0);
+		return (ft_printf("Error\n -> Map format error\n"), 0);
 	if (ft_strlen(cube->parsed_file[7]) != 1 && cube->parsed_file[7][0] != '\n')
-		return (0);
+		return (ft_printf("Error\n -> Map format error\n"), 0);
 	if (!check_texture(cube->parsed_file[0], "NO ", cube)
 		|| !check_texture(cube->parsed_file[1], "SO ", cube)
 		|| !check_texture(cube->parsed_file[2], "WE ", cube)
 		|| !check_texture(cube->parsed_file[3], "EA ", cube))
-		return (0);
+		return (ft_printf("Error\n -> Texture format error\n"), 0);
 	if (!check_color(cube->parsed_file[5], "F ", cube))
-		return (0);
+		return (ft_printf("Error\n -> Color format error\n"), 0);
 	if (!check_color(cube->parsed_file[6], "C ", cube))
-		return (0);
+		return (ft_printf("Error\n -> Color format error\n"), 0);
 	return (1);
 }
 
@@ -98,7 +98,7 @@ int	check_file_type(char *map_path)
 	i = ft_strlen(map_path);
 	if (i <= 4)
 	{
-		ft_printf("Map format error !\n");
+		ft_printf("Error\n -> Map format error\n");
 		return (0);
 	}
 	if (!(map_path[i - 1] == 'b'
@@ -106,7 +106,7 @@ int	check_file_type(char *map_path)
 		&& map_path[i - 3] == 'c'
 		&& map_path[i - 4] == '.'))
 	{
-		ft_printf("Map format error !\n");
+		ft_printf("Error\n -> Map format error\n");
 		return (0);
 	}
 	return (1);

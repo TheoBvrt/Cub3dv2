@@ -22,6 +22,7 @@ int	init(t_cube *cube, t_image *image)
 	render(cube);
 	mlx_hook(cube->mlx_win, 2, (1L << 0), on_keydown, cube);
 	mlx_hook(cube->mlx_win, 3, (1L << 1), on_keyrelease, cube);
+	mlx_hook(cube->mlx_win, 17, (0L), on_cross_click, cube);
 	mlx_loop_hook(cube->mlx, update, cube);
 	mlx_loop(cube->mlx);
 }
