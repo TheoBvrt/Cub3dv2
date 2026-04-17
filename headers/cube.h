@@ -16,8 +16,8 @@
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 # include <sys/time.h>
-# include "math.h"
-# include "stdio.h"
+# include <math.h>
+# include <stdio.h>
 
 # ifndef KEYCODE
 #  define ESCAPE 65307
@@ -67,14 +67,14 @@ typedef struct s_image
 typedef struct s_rendering
 {
 	int		**map;
-	double	posX;
-	double	posY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
-	double	lastTime;
-	double	deltaTime;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double	last_time;
+	double	delta_time;
 	char	*n_texture;
 	char	*s_texture;
 	char	*w_texture;
@@ -85,10 +85,10 @@ typedef struct s_rendering
 
 typedef struct s_keydown
 {
-	int	key_w;
-	int	key_s;
-	int	key_a;
-	int	key_d;
+	int		key_w;
+	int		key_s;
+	int		key_a;
+	int		key_d;
 }	t_keydown;
 
 typedef struct s_textures
@@ -132,48 +132,58 @@ typedef struct s_raycasting
 	char			*tex_data;
 }	t_raycasting;
 
+typedef struct s_verline
+{
+	int		start_x;
+	int		start_y;
+	int		end_y;
+	int		color;
+}	t_verline;
 
 typedef struct s_cube
 {
-	t_image		*image;
-	t_textures	textures;
-	t_rendering	rendering;
-	t_keydown	keydown;
+	t_image			*image;
+	t_textures		textures;
+	t_rendering		rendering;
+	t_keydown		keydown;
 	t_raycasting	ray;
-	int		orientation;
-	int		map_size;
-	int		map_length;
-	void	*mlx;
-	void	*mlx_win;
-	char	**parsed_file;
+	int				orientation;
+	int				map_size;
+	int				map_length;
+	void			*mlx;
+	void			*mlx_win;
+	char			**parsed_file;
 }	t_cube;
 
 void	render(t_cube *cube);
 int		on_keydown(int keycode, t_cube *cube);
 int		on_keyrelease(int keycode, t_cube *cube);
-void	draw_verline(int start_x, int start_y, int end_y, t_cube *cube, int color);
+void	draw_verline(t_verline line, t_cube *cube);
 void	my_mlx_pixel_put(t_image *image, int x, int y, int color);
 void	forward(t_cube *cube);
 void	backward(t_cube *cube);
 void	turn_left(t_cube *cube);
 void	turn_right(t_cube *cube);
-int	update(t_cube *cube);
-int	on_keyrelease(int keycode, t_cube *cube);
-int	check_file_type(char *map_path);
-int	parse_map(char *map_path, t_cube *cube);
-int	get_file_size(char *map_path);
-int	check_file(t_cube *cube);
-int	check_game_map(t_cube *cube);
+int		update(t_cube *cube);
+int		check_file_type(char *map_path);
+int		parse_map(char *map_path, t_cube *cube);
+int		get_file_size(char *map_path);
+int		check_file(t_cube *cube);
+int		check_game_map(t_cube *cube);
 void	free_tab(char **tab);
 void	free_game_map(t_cube *cube);
-int	get_max_length(t_cube *cube);
+int		get_max_length(t_cube *cube);
 void	set_start_position(int y, int x, t_cube *cube);
-int	is_valid_map_char(char c);
+int		is_valid_map_char(char c);
 void	clean_mlx(t_cube *cube);
-int	exit_cub3d(t_cube *cube);
+int		exit_cub3d(t_cube *cube);
 double	myabs(double x);
-int	on_cross_click(t_cube *cube);
-int	check_map_format(t_cube *cube);
+void	calculate_deltatime(t_cube *cube);
+void	set_values(t_cube *cube, t_raycasting *ray);
+void	buffer_fill(t_raycasting *ray, unsigned int b[1080][1920]);
+void	ray_calculator(t_cube *cube, t_raycasting *ray);
+int		on_cross_click(t_cube *cube);
+int		check_map_format(t_cube *cube);
 void	image_loader(t_cube *cube);
 void	raycasting(t_cube *cube, t_raycasting *ray);
 

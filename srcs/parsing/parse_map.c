@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
+/*   Updated: 2026/04/17 14:45:00 by theo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "cube.h"
 
 static void	parse_game_map(t_cube *cube)
@@ -34,7 +45,6 @@ static void	parse_game_map(t_cube *cube)
 		g_y ++;
 		f_y ++;
 	}
-
 }
 
 static int	alloc_map_table(t_cube *cube)
