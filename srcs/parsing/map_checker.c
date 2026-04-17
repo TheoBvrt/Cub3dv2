@@ -5,120 +5,97 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/17 14:40:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/17 14:40:00 by theo             ###   ########.fr       */
+/*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
+/*   Updated: 2026/04/17 14:45:00 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-static int	check_texture(char *str, char *prefix, t_cube *cube)
+static int	check_neighbor(int y, int x, t_cube *cube)
 {
-	void	*img;
-	char	*path;
-	int		img_width;
-	int		img_height;
-
-	if (ft_strlen(str) <= 4)
+	if (y == 0 || y == cube->map_size - 9 || x == 0 || x == cube->map_length -1)
 		return (0);
-	if (ft_strncmp(str, prefix, 3) != 0)
-		return (ft_printf("Error\n -> Texture error\n"), 0);
-	path = ft_substr(str, 3, ft_strlen(str) - 4);
-	if (!path)
+	if (cube->rendering.map[y - 1][x] == -1)
 		return (0);
-	img = mlx_xpm_file_to_image(cube->mlx, path, &img_width, &img_height);
-	if (!img)
-		return (free(path), 0);
-	mlx_destroy_image(cube->mlx, img);
-	free(path);
+	if (cube->rendering.map[y + 1][x] == -1)
+		return (0);
+	if (cube->rendering.map[y][x - 1] == -1)
+		return (0);
+	if (cube->rendering.map[y][x + 1] == -1)
+		return (0);
 	return (1);
 }
 
-static int	check_color_format(char *str)
+static int	check_start_position(t_cube *cube)
 {
-	int	comas_counter;
-	int	index;
+	int	counter;
+	int	y;
+	int	x;
 
-	index = 0;
-	comas_counter = 0;
-	while (str[index])
+	y = 8;
+	counter = 0;
+	while (y < cube->map_size)
 	{
-		if (str[index] == ',')
-			comas_counter++;
-		if (!ft_isdigit(str[index]) && str[index] != ',')
-			return (0);
-		index++;
+		x = 0;
+		while (x < cube->map_length)
+		{
+			if (cube->parsed_file[y][x] == 'N'
+				|| cube->parsed_file[y][x] == 'S'
+				|| cube->parsed_file[y][x] == 'W'
+				|| cube->parsed_file[y][x] == 'E')
+				counter ++;
+			x ++;
+		}
+		y ++;
 	}
-	if (comas_counter != 2)
-		return (ft_printf("Error\n -> Color error\n"), 0);
-	return (1);
-}
-
-static int	check_color(char *str, char *prefix, t_cube *cube)
-{
-	char	*tmp;
-	char	**values;
-
-	(void)cube;
-	if (ft_strlen(str) <= 3)
+	if (counter != 1)
 		return (0);
-	if (ft_strncmp(str, prefix, 2) != 0)
-		return (ft_printf("Error\n -> Color error\n"), 0);
-	tmp = ft_substr(str, 2, ft_strlen(str) - 3);
-	if (!tmp)
-		return (0);
-	if (!check_color_format(tmp))
-		return (free(tmp), 0);
-	values = ft_split(tmp, ',');
-	if (!values)
-		return (free(tmp), 0);
-	if (ft_atoi(values[0]) > 255 || ft_atoi(values[1]) > 255
-		|| ft_atoi(values[2]) > 255)
-		return (free(tmp), free_tab(values), 0);
-	free(tmp);
-	free_tab(values);
 	return (1);
 }
 
-int	check_file(t_cube *cube)
+int	check_map_format(t_cube *cube)
 {
-	if (cube->map_size <= 9)
-		return (ft_printf("Error\n -> Map format error\n"), 0);
-	if (ft_strlen(cube->parsed_file[4]) != 1
-		&& cube->parsed_file[4][0] != '\n')
-		return (ft_printf("Error\n -> Map format error\n"), 0);
-	if (ft_strlen(cube->parsed_file[7]) != 1
-		&& cube->parsed_file[7][0] != '\n')
-		return (ft_printf("Error\n -> Map format error\n"), 0);
-	if (!check_texture(cube->parsed_file[0], "NO ", cube)
-		|| !check_texture(cube->parsed_file[1], "SO ", cube)
-		|| !check_texture(cube->parsed_file[2], "WE ", cube)
-		|| !check_texture(cube->parsed_file[3], "EA ", cube))
-		return (ft_printf("Error\n -> Texture format error\n"), 0);
-	if (!check_color(cube->parsed_file[5], "F ", cube))
-		return (ft_printf("Error\n -> Color format error\n"), 0);
-	if (!check_color(cube->parsed_file[6], "C ", cube))
-		return (ft_printf("Error\n -> Color format error\n"), 0);
-	return (1);
-}
+	int	y;
+	int	x;
 
-int	check_file_type(char *map_path)
-{
-	int	i;
-
-	i = ft_strlen(map_path);
-	if (i <= 4)
+	y = 8;
+	while (cube->parsed_file[y])
 	{
-		ft_printf("Error\n -> Map format error\n");
-		return (0);
+		x = 0;
+		while (cube->parsed_file[y][x])
+		{
+			if (!is_valid_map_char(cube->parsed_file[y][x]))
+				return (ft_printf("Error\n -> Invalid character\n"), 0);
+			x ++;
+		}
+		y ++;
 	}
-	if (!(map_path[i - 1] == 'b'
-			&& map_path[i - 2] == 'u'
-			&& map_path[i - 3] == 'c'
-			&& map_path[i - 4] == '.'))
+	if (!check_start_position(cube))
+		return (ft_printf("Error\n -> Start position error\n"), 0);
+	return (1);
+}
+
+int	check_game_map(t_cube *cube)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < cube->map_size - 8)
 	{
-		ft_printf("Error\n -> Map format error\n");
-		return (0);
+		x = 0;
+		while (x < cube->map_length)
+		{
+			if (cube->rendering.map[y][x] != -1
+				&& cube->rendering.map[y][x] != 1)
+			{
+				if (!check_neighbor(y, x, cube))
+					return (ft_printf("Error\n -> Map format error\n"), 0);
+			}
+			x ++;
+		}
+		y ++;
 	}
 	return (1);
 }

@@ -75,8 +75,8 @@ void	set_values(t_cube *cube, t_raycasting *ray)
 		+ cube->rendering.plane_x * ray->camera_x;
 	ray->ray_dir_y = cube->rendering.dir_y
 		+ cube->rendering.plane_y * ray->camera_x;
-	ray->map_x = (int)cube->rendering.pos_x;
-	ray->map_y = (int)cube->rendering.pos_y;
+	ray->map_x = (int)cube->rendering.posX;
+	ray->map_y = (int)cube->rendering.posY;
 	if (ray->ray_dir_x == 0)
 		ray->delta_dist_x = 1e30;
 	else

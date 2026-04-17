@@ -14,17 +14,17 @@
 
 void	forward(t_cube *cube)
 {
-	cube->rendering.pos_x += cube->rendering.dir_x
+	cube->rendering.posX += cube->rendering.dir_x
 		* (MOVESPEED * cube->rendering.delta_time);
-	cube->rendering.pos_y += cube->rendering.dir_y
+	cube->rendering.posY += cube->rendering.dir_y
 		* (MOVESPEED * cube->rendering.delta_time);
 }
 
 void	backward(t_cube *cube)
 {
-	cube->rendering.pos_x -= cube->rendering.dir_x
+	cube->rendering.posX -= cube->rendering.dir_x
 		* (MOVESPEED * cube->rendering.delta_time);
-	cube->rendering.pos_y -= cube->rendering.dir_y
+	cube->rendering.posY -= cube->rendering.dir_y
 		* (MOVESPEED * cube->rendering.delta_time);
 }
 

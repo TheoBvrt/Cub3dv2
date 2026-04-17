@@ -67,8 +67,8 @@ typedef struct s_image
 typedef struct s_rendering
 {
 	int		**map;
-	double	pos_x;
-	double	pos_y;
+	double	posX;
+	double	posY;
 	double	dir_x;
 	double	dir_y;
 	double	plane_x;

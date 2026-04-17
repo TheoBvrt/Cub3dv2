@@ -54,25 +54,25 @@ void	set_ray_dir(t_cube *cube, t_raycasting *ray)
 	if (ray->ray_dir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->side_dist_x = (cube->rendering.pos_x - ray->map_x)
+		ray->side_dist_x = (cube->rendering.posX - ray->map_x)
 			* ray->delta_dist_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - cube->rendering.pos_x)
+		ray->side_dist_x = (ray->map_x + 1.0 - cube->rendering.posX)
 			* ray->delta_dist_x;
 	}
 	if (ray->ray_dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->side_dist_y = (cube->rendering.pos_y - ray->map_y)
+		ray->side_dist_y = (cube->rendering.posY - ray->map_y)
 			* ray->delta_dist_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - cube->rendering.pos_y)
+		ray->side_dist_y = (ray->map_y + 1.0 - cube->rendering.posY)
 			* ray->delta_dist_y;
 	}
 }

@@ -43,10 +43,10 @@ void	ray_calculator(t_cube *cube, t_raycasting *ray)
 	if (ray->draw_end >= HEIGHT)
 		ray->draw_end = HEIGHT - 1;
 	if (ray->side == 0)
-		ray->wall_x = cube->rendering.pos_y
+		ray->wall_x = cube->rendering.posY
 			+ ray->perp_wall_dist * ray->ray_dir_y;
 	else
-		ray->wall_x = cube->rendering.pos_x
+		ray->wall_x = cube->rendering.posX
 			+ ray->perp_wall_dist * ray->ray_dir_x;
 	ray->wall_x -= floor(ray->wall_x);
 	ray->tex_x = (int)(ray->wall_x * (double)64);
