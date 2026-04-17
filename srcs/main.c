@@ -19,7 +19,8 @@ int	init(t_cube *cube, t_image *image)
 	image->addr = mlx_get_data_addr(image->img, &image->bits_per_pixel,
 		&image->line_length, &image->endian);
 	cube->image = image;
-	render(cube);
+	//render(cube);
+	image_loader(cube);
 	mlx_hook(cube->mlx_win, 2, (1L << 0), on_keydown, cube);
 	mlx_hook(cube->mlx_win, 3, (1L << 1), on_keyrelease, cube);
 	mlx_hook(cube->mlx_win, 17, (0L), on_cross_click, cube);

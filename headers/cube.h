@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 21:41:21 by theo              #+#    #+#             */
-/*   Updated: 2026/04/07 18:32:44 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/17 14:22:08 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,24 +91,21 @@ typedef struct s_keydown
 	int	key_d;
 }	t_keydown;
 
-typedef struct s_cube
+typedef struct s_textures
 {
-	t_image		*image;
-	t_rendering	rendering;
-	t_keydown	keydown;
-	int		orientation;
-	int		map_size;
-	int		map_length;
-	void	*mlx;
-	void	*mlx_win;
-	char	**parsed_file;
-}	t_cube;
+	int		ph;
+	int		pw;
+	void	*north;
+	void	*south;
+	void	*east;
+	void	*west;
+}	t_textures;
 
 typedef struct s_raycasting
 {
 	int				x;
 	int				map_x;
-	int				map_y;	
+	int				map_y;
 	int				step_x;
 	int				step_y;
 	int				hit;
@@ -134,6 +131,22 @@ typedef struct s_raycasting
 	double			side_dist_y;
 	char			*tex_data;
 }	t_raycasting;
+
+
+typedef struct s_cube
+{
+	t_image		*image;
+	t_textures	textures;
+	t_rendering	rendering;
+	t_keydown	keydown;
+	t_raycasting	ray;
+	int		orientation;
+	int		map_size;
+	int		map_length;
+	void	*mlx;
+	void	*mlx_win;
+	char	**parsed_file;
+}	t_cube;
 
 void	render(t_cube *cube);
 int		on_keydown(int keycode, t_cube *cube);
@@ -161,4 +174,7 @@ int	exit_cub3d(t_cube *cube);
 double	myabs(double x);
 int	on_cross_click(t_cube *cube);
 int	check_map_format(t_cube *cube);
+void	image_loader(t_cube *cube);
+void	raycasting(t_cube *cube, t_raycasting *ray);
+
 #endif

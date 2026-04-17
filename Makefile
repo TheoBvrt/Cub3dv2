@@ -9,7 +9,8 @@ SRCS =	./srcs/main.c \
 		./srcs/parsing/parser_utils.c \
 		./srcs/parsing/map_checker.c \
 		./srcs/utils/utils.c \
-		./srcs/utils/exit.c
+		./srcs/utils/exit.c \
+		./srcs/rendering/rendering_textured.c
 
 OBJS = ${SRCS:.c=.o}
 CC = gcc
@@ -22,11 +23,11 @@ all : ${NAME}
 	${CC} ${CFLAGS} -c $< -o $@
 
 ${NAME} : ${OBJS}
-	${MAKE} -C ./libft 
+	${MAKE} -C ./libft
 	$(CC) $(OBJS) ./libft/libft.a -Lmlx -lmlx -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
-	${RM} ${OBJS} 
+	${RM} ${OBJS}
 	make clean -C ./libft
 
 fclean: clean
