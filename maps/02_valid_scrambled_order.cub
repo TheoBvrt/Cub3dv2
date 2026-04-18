@@ -1,0 +1,13 @@
+C 98,123,123
+EA textures/wood.xpm
+
+F 44,219,50
+NO textures/grey_stone.xpm
+WE textures/red_bricks.xpm
+SO textures/mossy.xpm
+
+111111
+100001
+10N001
+100001
+111111
