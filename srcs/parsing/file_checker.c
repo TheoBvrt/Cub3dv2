@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/17 14:45:00 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/18 14:32:34 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ static int	check_color(char *str, char *prefix, t_cube *cube)
 	values = ft_split(tmp, ',');
 	if (!values)
 		return (free(tmp), 0);
+	if (!values[1] || !values[0] || !values[2])
+		return (free(tmp), free_tab(values), 0);
 	if (ft_atoi(values[0]) > 255 || ft_atoi(values[1]) > 255
 		|| ft_atoi(values[2]) > 255)
 		return (free(tmp), free_tab(values), 0);

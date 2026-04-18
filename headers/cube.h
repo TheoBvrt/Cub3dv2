@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 21:41:21 by theo              #+#    #+#             */
-/*   Updated: 2026/04/17 14:22:08 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/18 14:27:13 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,16 @@ typedef struct s_image
 typedef struct s_rendering
 {
 	int		**map;
-	double	posX;
-	double	posY;
+	int		f_color;
+	int		c_color;
+	double	pos_x;
+	double	pos_y;
 	double	dir_x;
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
 	double	last_time;
 	double	delta_time;
-	char	*n_texture;
-	char	*s_texture;
-	char	*w_texture;
-	char	*e_texture;
-	char	*f_color;
-	char	*c_color;
 }	t_rendering;
 
 typedef struct s_keydown
@@ -153,6 +149,10 @@ typedef struct s_cube
 	void			*mlx;
 	void			*mlx_win;
 	char			**parsed_file;
+	char			*path_texture_north;
+	char			*path_texture_south;
+	char			*path_texture_west;
+	char			*path_texture_east;
 }	t_cube;
 
 void	render(t_cube *cube);
@@ -178,6 +178,7 @@ int		is_valid_map_char(char c);
 void	clean_mlx(t_cube *cube);
 int		exit_cub3d(t_cube *cube);
 double	myabs(double x);
+void	set_buffer(t_cube *cube, unsigned int buffer[1080][1920]);
 void	calculate_deltatime(t_cube *cube);
 void	set_values(t_cube *cube, t_raycasting *ray);
 void	buffer_fill(t_raycasting *ray, unsigned int b[1080][1920]);
@@ -186,5 +187,9 @@ int		on_cross_click(t_cube *cube);
 int		check_map_format(t_cube *cube);
 void	image_loader(t_cube *cube);
 void	raycasting(t_cube *cube, t_raycasting *ray);
+void	draw_ground_sky(t_cube *cube, unsigned int buffer[1080][1920]);
+int		alloc_map_table(t_cube *cube);
+int		is_start_position(t_cube *cube, char c);
+void	rotation_to(t_cube *cube, int orientation);
 
 #endif

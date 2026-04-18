@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xiribar <xiribar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/17 14:45:00 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/18 14:14:17 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ void	ray_calculator(t_cube *cube, t_raycasting *ray)
 	if (ray->draw_end >= HEIGHT)
 		ray->draw_end = HEIGHT - 1;
 	if (ray->side == 0)
-		ray->wall_x = cube->rendering.posY
+		ray->wall_x = cube->rendering.pos_y
 			+ ray->perp_wall_dist * ray->ray_dir_y;
 	else
-		ray->wall_x = cube->rendering.posX
+		ray->wall_x = cube->rendering.pos_x
 			+ ray->perp_wall_dist * ray->ray_dir_x;
 	ray->wall_x -= floor(ray->wall_x);
 	ray->tex_x = (int)(ray->wall_x * (double)64);
@@ -55,4 +55,25 @@ void	ray_calculator(t_cube *cube, t_raycasting *ray)
 	ray->step = 1.0 * 64 / ray->line_height;
 	ray->text_pos = (ray->draw_start - HEIGHT / 2 + ray->line_height / 2)
 		* ray->step;
+}
+
+void	draw_ground_sky(t_cube *cube, unsigned int buffer[1080][1920])
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			if (y < HEIGHT / 2)
+				buffer[y][x] = cube->rendering.c_color;
+			else
+				buffer[y][x] = cube->rendering.f_color;
+			x ++;
+		}
+		y ++;
+	}
 }
