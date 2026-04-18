@@ -165,6 +165,7 @@ void	backward(t_cube *cube);
 void	turn_left(t_cube *cube);
 void	turn_right(t_cube *cube);
 int		update(t_cube *cube);
+void	set_buffer(t_cube *cube, unsigned int buffer[1080][1920]);
 int		check_file_type(char *map_path);
 int		parse_map(char *map_path, t_cube *cube);
 int		get_file_size(char *map_path);

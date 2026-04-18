@@ -23,6 +23,7 @@ int	update(t_cube *cube)
 	if (cube->keydown.key_d == 1)
 		turn_right(cube);
 	raycasting(cube, &cube->ray);
+	return (0);
 }
 
 int	on_keydown(int keycode, t_cube *cube)
