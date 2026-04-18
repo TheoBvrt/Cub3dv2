@@ -6,10 +6,45 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/17 14:45:00 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/18 14:04:24 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "cube.h"
+
+static int	get_map_color(t_cube *cube, int	line, int *dest)
+{
+	char	*tmp;
+	char	**rgb;
+
+	tmp = ft_substr(cube->parsed_file[line], 2, ft_strlen(cube->parsed_file[line]) - 3);
+	if (!tmp)
+		return (0);
+	rgb = ft_split(tmp, ',');
+	if (!rgb)
+		return (0);
+	free (tmp);
+	*dest = (ft_atoi(rgb[0]) << 16) | (atoi(rgb[1]) << 8) | atoi(rgb[2]);
+	free_tab(rgb);
+	return (1);
+}
+
+static int	get_textures(t_cube *cube)
+{
+	cube->path_texture_north = ft_substr(cube->parsed_file[0], 3, ft_strlen(cube->parsed_file[0]) - 4);
+	if (!cube->path_texture_north)
+		return (0);
+	cube->path_texture_south = ft_substr(cube->parsed_file[1], 3, ft_strlen(cube->parsed_file[1]) - 4);
+	if (!cube->path_texture_south)
+		return (0);
+	cube->path_texture_west = ft_substr(cube->parsed_file[2], 3, ft_strlen(cube->parsed_file[2]) - 4);
+	if (!cube->path_texture_west)
+		return (0);
+	cube->path_texture_east = ft_substr(cube->parsed_file[3], 3, ft_strlen(cube->parsed_file[3]) - 4);
+	if (!cube->path_texture_east)
+		return (0);
+	return (1);
+}
 
 static void	parse_game_map(t_cube *cube)
 {
@@ -105,7 +140,9 @@ int	parse_map(char *map_path, t_cube *cube)
 	if (!alloc_map_table(cube))
 		return (free_tab(cube->parsed_file), 0);
 	parse_game_map(cube);
-	if (!check_game_map(cube))
+	get_map_color(cube, 5, &cube->rendering.f_color);
+	get_map_color(cube, 6, &cube->rendering.c_color);
+	if (!check_game_map(cube) || !get_textures(cube))
 		return (free_tab(cube->parsed_file),
 			free_game_map(cube), 0);
 	return (1);

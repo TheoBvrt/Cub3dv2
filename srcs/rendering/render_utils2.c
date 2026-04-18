@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xiribar <xiribar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/17 14:45:00 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/18 13:23:07 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,25 @@ void	ray_calculator(t_cube *cube, t_raycasting *ray)
 	ray->step = 1.0 * 64 / ray->line_height;
 	ray->text_pos = (ray->draw_start - HEIGHT / 2 + ray->line_height / 2)
 		* ray->step;
+}
+
+void	draw_ground_sky(t_cube *cube, unsigned int buffer[1080][1920])
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			if (y < HEIGHT / 2)
+				buffer[y][x] = cube->rendering.c_color;
+			else
+				buffer[y][x] = cube->rendering.f_color;
+			x ++;
+		}
+		y ++;
+	}
 }
