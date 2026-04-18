@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movement.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xiribar <xiribar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:18:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/17 15:18:00 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/18 14:15:37 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "cube.h"
 
 void	free_tab(char **tab)
@@ -33,8 +34,8 @@ void	free_game_map(t_cube *cube)
 
 void	set_start_position(int y, int x, t_cube *cube)
 {
-	cube->rendering.posY = x + 0.5;
-	cube->rendering.posX = y - 7;
+	cube->rendering.pos_y = x + 0.5;
+	cube->rendering.pos_x = y - 7;
 	if (cube->parsed_file[y][x] == 'N')
 		cube->orientation = N;
 	if (cube->parsed_file[y][x] == 'S')

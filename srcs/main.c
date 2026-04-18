@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:25:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/18 14:05:48 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/18 14:27:32 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	init(t_cube *cube, t_image *image)
 			&image->line_length, &image->endian);
 	cube->image = image;
 	image_loader(cube);
+	rotation_to(cube, cube->orientation);
 	mlx_hook(cube->mlx_win, 2, (1L << 0), on_keydown, cube);
 	mlx_hook(cube->mlx_win, 3, (1L << 1), on_keyrelease, cube);
 	mlx_hook(cube->mlx_win, 17, 0L, on_cross_click, cube);
