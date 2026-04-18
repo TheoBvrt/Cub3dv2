@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:02:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/17 15:02:00 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/18 14:15:15 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	image_loader(t_cube *cube)
 {
 	cube->textures.north = mlx_xpm_file_to_image(cube->mlx,
-			"textures/basalt.xpm", &cube->textures.pw, &cube->textures.ph);
+			cube->path_texture_north, &cube->textures.pw, &cube->textures.ph);
 	cube->textures.south = mlx_xpm_file_to_image(cube->mlx,
-			"textures/basalt.xpm", &cube->textures.pw, &cube->textures.ph);
+			cube->path_texture_south, &cube->textures.pw, &cube->textures.ph);
 	cube->textures.east = mlx_xpm_file_to_image(cube->mlx,
-			"textures/basalt.xpm", &cube->textures.pw, &cube->textures.ph);
+			cube->path_texture_east, &cube->textures.pw, &cube->textures.ph);
 	cube->textures.west = mlx_xpm_file_to_image(cube->mlx,
-			"textures/basalt.xpm", &cube->textures.pw, &cube->textures.ph);
+			cube->path_texture_west, &cube->textures.pw, &cube->textures.ph);
 }
 
 void	texture_selector(t_cube *cube, t_raycasting *ray)
@@ -40,10 +40,10 @@ void	texture_selector(t_cube *cube, t_raycasting *ray)
 		else
 		{
 			if (ray->ray_dir_y > 0)
-				ray->tex_data = mlx_get_data_addr(cube->textures.east,
+				ray->tex_data = mlx_get_data_addr(cube->textures.west,
 						&ray->bpp, &ray->sl, &ray->end);
 			else
-				ray->tex_data = mlx_get_data_addr(cube->textures.west,
+				ray->tex_data = mlx_get_data_addr(cube->textures.east,
 						&ray->bpp, &ray->sl, &ray->end);
 		}
 	}
@@ -54,25 +54,25 @@ void	set_ray_dir(t_cube *cube, t_raycasting *ray)
 	if (ray->ray_dir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->side_dist_x = (cube->rendering.posX - ray->map_x)
+		ray->side_dist_x = (cube->rendering.pos_x - ray->map_x)
 			* ray->delta_dist_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - cube->rendering.posX)
+		ray->side_dist_x = (ray->map_x + 1.0 - cube->rendering.pos_x)
 			* ray->delta_dist_x;
 	}
 	if (ray->ray_dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->side_dist_y = (cube->rendering.posY - ray->map_y)
+		ray->side_dist_y = (cube->rendering.pos_y - ray->map_y)
 			* ray->delta_dist_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - cube->rendering.posY)
+		ray->side_dist_y = (ray->map_y + 1.0 - cube->rendering.pos_y)
 			* ray->delta_dist_y;
 	}
 }
@@ -104,6 +104,7 @@ void	raycasting(t_cube *cube, t_raycasting *ray)
 
 	ft_memset(buffer, 0, sizeof(buffer));
 	ray->x = 0;
+	draw_ground_sky(cube, buffer);
 	while (ray->x < WIDTH)
 	{
 		set_values(cube, ray);

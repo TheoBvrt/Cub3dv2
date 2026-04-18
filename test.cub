@@ -1,13 +1,15 @@
-NO textures/basalt.xpm
-SO textures/basalt.xpm
-WE textures/basalt.xpm
-EA textures/basalt.xpm
+NO textures/grey_stone.xpm
+SO textures/mossy.xpm
+WE textures/red_bricks.xpm
+EA textures/wood.xpm
 
-F 18,53,25
-C 153,204,255
+F 44,219,50
+C 98,123,123
 
-11111
-10001
-1W101
-10001
-11111
+1111111111
+1000100001
+1000000001
+1000S0001
+100000001
+1000000001
+1111111111

@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/17 14:45:00 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/18 14:26:32 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ static int	check_start_position(t_cube *cube)
 		x = 0;
 		while (x < cube->map_length)
 		{
-			if (cube->parsed_file[y][x] == 'N'
-				|| cube->parsed_file[y][x] == 'S'
-				|| cube->parsed_file[y][x] == 'W'
-				|| cube->parsed_file[y][x] == 'E')
+			if (is_start_position(cube, cube->parsed_file[y][x]))
 				counter ++;
 			x ++;
 		}
