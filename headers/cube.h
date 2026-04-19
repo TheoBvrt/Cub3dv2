@@ -85,6 +85,8 @@ typedef struct s_keydown
 	int		key_s;
 	int		key_a;
 	int		key_d;
+	int		key_left;
+	int		key_right;
 }	t_keydown;
 
 typedef struct s_textures
@@ -161,6 +163,8 @@ int		on_keyrelease(int keycode, t_cube *cube);
 void	draw_verline(t_verline line, t_cube *cube);
 void	my_mlx_pixel_put(t_image *image, int x, int y, int color);
 void	forward(t_cube *cube);
+void	right(t_cube *cube);
+void	left(t_cube *cube);
 void	backward(t_cube *cube);
 void	turn_left(t_cube *cube);
 void	turn_right(t_cube *cube);
