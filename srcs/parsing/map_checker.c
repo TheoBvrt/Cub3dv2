@@ -14,7 +14,8 @@
 
 static int	check_neighbor(int y, int x, t_cube *cube)
 {
-	if (y == 0 || y == cube->map_size - 9 || x == 0 || x == cube->map_length -1)
+	if (y == 0 || y == cube->map_size - (cube->parser.map_index + 1)
+		|| x == 0 || x == cube->map_length -1)
 		return (0);
 	if (cube->rendering.map[y - 1][x] == -1)
 		return (0);
@@ -33,7 +34,7 @@ static int	check_start_position(t_cube *cube)
 	int	y;
 	int	x;
 
-	y = 8;
+	y = cube->parser.map_index;
 	counter = 0;
 	while (y < cube->map_size)
 	{
@@ -56,7 +57,7 @@ int	check_map_format(t_cube *cube)
 	int	y;
 	int	x;
 
-	y = 8;
+	y = cube->parser.map_index;
 	while (cube->parsed_file[y])
 	{
 		x = 0;
@@ -79,7 +80,7 @@ int	check_game_map(t_cube *cube)
 	int	x;
 
 	y = 0;
-	while (y < cube->map_size - 8)
+	while (y < cube->map_size - cube->parser.map_index)
 	{
 		x = 0;
 		while (x < cube->map_length)
