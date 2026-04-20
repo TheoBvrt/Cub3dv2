@@ -1,15 +1,17 @@
-NO textures/grey_stone.xpm
-SO textures/mossy.xpm
-WE textures/red_bricks.xpm
+
 EA textures/wood.xpm
 
-F 44,219,50
 C 98,123,123
 
-1111111111
-1000100001
-1000000001
-1000S0001
-100000001
-1000000001
-1111111111
+F 44,219,50
+
+WE textures/red_bricks.xpm
+
+SO textures/red_bricks.xpm
+NO textures/grey_stone.xpm
+1111
+10011
+100E1
+10001
+10001
+111111

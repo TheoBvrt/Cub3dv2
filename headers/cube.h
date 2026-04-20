@@ -136,6 +136,18 @@ typedef struct s_verline
 	int		color;
 }	t_verline;
 
+typedef	struct s_parser
+{
+	int	no_tex_index;
+	int	so_tex_index;
+	int	we_tex_index;
+	int	ea_tex_index;
+	int	f_index;
+	int	c_index;
+	int	map_index;
+}	t_parser;
+
+
 typedef struct s_cube
 {
 	t_image			*image;
@@ -143,6 +155,7 @@ typedef struct s_cube
 	t_rendering		rendering;
 	t_keydown		keydown;
 	t_raycasting	ray;
+	t_parser		parser;
 	int				orientation;
 	int				map_size;
 	int				map_length;
@@ -190,6 +203,9 @@ void	raycasting(t_cube *cube, t_raycasting *ray);
 void	draw_ground_sky(t_cube *cube, unsigned int buffer[1080][1920]);
 int		alloc_map_table(t_cube *cube);
 int		is_start_position(t_cube *cube, char c);
+int		is_map_line(char *str);
+int		get_index_of_map(t_cube *cube);
 void	rotation_to(t_cube *cube, int orientation);
+int		get_index_of_element(char *prefix_to_find, t_cube *cube);
 
 #endif

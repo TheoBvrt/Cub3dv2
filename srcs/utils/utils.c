@@ -27,7 +27,7 @@ void	free_game_map(t_cube *cube)
 	int	index;
 
 	index = 0;
-	while (index < cube->map_size - 8)
+	while (index < cube->map_size - cube->parser.map_index)
 		free(cube->rendering.map[index ++]);
 	free(cube->rendering.map);
 }
@@ -35,7 +35,7 @@ void	free_game_map(t_cube *cube)
 void	set_start_position(int y, int x, t_cube *cube)
 {
 	cube->rendering.pos_y = x + 0.5;
-	cube->rendering.pos_x = y - 7;
+	cube->rendering.pos_x = y - cube->parser.map_index;
 	if (cube->parsed_file[y][x] == 'N')
 		cube->orientation = N;
 	if (cube->parsed_file[y][x] == 'S')

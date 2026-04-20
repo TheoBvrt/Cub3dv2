@@ -11,6 +11,7 @@ SRCS =	./srcs/main.c \
 		./srcs/parsing/map_checker.c \
 		./srcs/utils/utils.c \
 		./srcs/utils/exit.c \
+		./srcs/parsing/parser_utils_2.c
 
 OBJS = ${SRCS:.c=.o}
 CC = gcc

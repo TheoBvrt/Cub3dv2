@@ -18,7 +18,7 @@ int	get_max_length(t_cube *cube)
 	int	res;
 	int	tmp;
 
-	index = 8;
+	index = cube->parser.map_index;
 	res = 0;
 	while (cube->parsed_file[index])
 	{
@@ -58,10 +58,11 @@ int	alloc_map_table(t_cube *cube)
 	int	x;
 
 	index = 0;
-	cube->rendering.map = ft_calloc(cube->map_size - 7, sizeof(int *));
+	cube->rendering.map = ft_calloc(cube->map_size
+			- cube->parser.map_index, sizeof(int *));
 	if (!cube->rendering.map)
 		return (0);
-	while (index < cube->map_size - 8)
+	while (index < cube->map_size - cube->parser.map_index)
 	{
 		x = 0;
 		cube->rendering.map[index]
@@ -85,6 +86,6 @@ int	is_start_position(t_cube *cube, char c)
 	if (c == 'W')
 		return (cube->orientation = W, 1);
 	if (c == 'E')
-		return (cube->orientation = E, 1);;
+		return (cube->orientation = E, 1);
 	return (0);
 }
