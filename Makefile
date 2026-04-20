@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 SRCS =	./srcs/main.c \
 		./srcs/rendering/render_utils.c \
 		./srcs/rendering/input.c \
@@ -14,9 +14,9 @@ SRCS =	./srcs/main.c \
 		./srcs/parsing/parser_utils_2.c
 
 OBJS = ${SRCS:.c=.o}
-CC = gcc
+CC = cc
 RM = rm -f
-CFLAGS = -Iheaders -Imlx -g
+CFLAGS = -Iheaders -Imlx -g -Wall -Wextra -Werror
 
 all : ${NAME}
 

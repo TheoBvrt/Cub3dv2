@@ -38,6 +38,34 @@ void	backward(t_cube *cube)
 		cube->rendering.pos_y += cube->rendering.dir_y * move;
 }
 
+void	right(t_cube *cube)
+{
+	double	move;
+
+	move = MOVESPEED * cube->rendering.delta_time;
+	if (cube->rendering.map[(int)(cube->rendering.pos_x + cube->rendering.dir_y
+			* move)][(int)(cube->rendering.pos_y)] == 0)
+		cube->rendering.pos_x += cube->rendering.dir_y * move;
+	if (cube->rendering.map[(int)(cube->rendering.pos_x)]
+		[(int)(cube->rendering.pos_y + (cube->rendering.dir_x * -1) * move)] == 0)
+		cube->rendering.pos_y += (cube->rendering.dir_x * -1) * move;
+}
+
+void	left(t_cube *cube)
+{
+	double	move;
+	int		temp;
+
+	move = MOVESPEED * cube->rendering.delta_time;
+	temp = cube->rendering.pos_x;
+	if (cube->rendering.map[(int)(cube->rendering.pos_x + (cube->rendering.dir_y * -1)
+			* move)][(int)(cube->rendering.pos_y)] == 0)
+		cube->rendering.pos_x += (cube->rendering.dir_y * -1) * move;
+	if (cube->rendering.map[(int)(cube->rendering.pos_x)]
+		[(int)(cube->rendering.pos_y + cube->rendering.dir_x * move)] == 0)
+		cube->rendering.pos_y += cube->rendering.dir_x * move;
+}
+
 void	turn_left(t_cube *cube)
 {
 	double	old_dir_x;
