@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:25:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/18 14:27:32 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/21 11:51:36 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	init(t_cube *cube, t_image *image)
 	cube->keydown.key_s = 0;
 	cube->keydown.key_d = 0;
 	cube->keydown.key_w = 0;
+	cube->keydown.key_right = 0;
+	cube->keydown.key_left = 0;
 	cube->mlx_win = mlx_new_window(cube->mlx, WIDTH, HEIGHT, "Cub3d");
 	image->img = mlx_new_image(cube->mlx, WIDTH, HEIGHT);
 	image->addr = mlx_get_data_addr(image->img, &image->bits_per_pixel,
