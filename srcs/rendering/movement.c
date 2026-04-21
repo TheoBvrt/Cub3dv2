@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:18:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/18 14:20:36 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/21 11:50:29 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ void	right(t_cube *cube)
 void	left(t_cube *cube)
 {
 	double	move;
-	int		temp;
 
 	move = MOVESPEED * cube->rendering.delta_time;
-	temp = cube->rendering.pos_x;
 	if (cube->rendering.map[(int)(cube->rendering.pos_x + (cube->rendering.dir_y * -1)
 			* move)][(int)(cube->rendering.pos_y)] == 0)
 		cube->rendering.pos_x += (cube->rendering.dir_y * -1) * move;
