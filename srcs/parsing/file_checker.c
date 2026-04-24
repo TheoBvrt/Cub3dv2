@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/18 14:32:34 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/24 16:24:15 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int	check_tex(char *str, char *prefix, t_cube *cube)
 
 	if (ft_strlen(str) <= 4)
 		return (0);
-	if (ft_strncmp(str, prefix, 3) != 0)
+	if (!check_identifier(str, prefix))
 		return (ft_printf("Error\n -> Texture error\n"), 0);
-	path = ft_substr(str, 3, ft_strlen(str) - 4);
+	path = get_after_id(str, prefix);
 	if (!path)
 		return (0);
 	img = mlx_xpm_file_to_image(cube->mlx, path, &img_width, &img_height);
@@ -45,7 +45,8 @@ static int	check_color_format(char *str)
 	{
 		if (str[index] == ',')
 			comas_counter++;
-		if (!ft_isdigit(str[index]) && str[index] != ',')
+		if (!ft_isdigit(str[index])
+			&& str[index] != ',' && !is_wspace(str[index]))
 			return (0);
 		index++;
 	}
@@ -62,9 +63,9 @@ static int	check_color(char *str, char *prefix, t_cube *cube)
 	(void)cube;
 	if (ft_strlen(str) <= 3)
 		return (0);
-	if (ft_strncmp(str, prefix, 2) != 0)
+	if (!check_identifier(str, prefix))
 		return (ft_printf("Error\n -> Color error\n"), 0);
-	tmp = ft_substr(str, 2, ft_strlen(str) - 3);
+	tmp = get_after_id(str, prefix);
 	if (!tmp)
 		return (0);
 	if (!check_color_format(tmp))
@@ -82,54 +83,24 @@ static int	check_color(char *str, char *prefix, t_cube *cube)
 	return (1);
 }
 
-int	check_doublon(t_cube *cube)
-{
-	int	index;
-
-	index = 0;
-	while (cube->parsed_file[index])
-	{
-		if (ft_strncmp(cube->parsed_file[index], "NO ", 3) == 0
-			&& index != cube->parser.no_tex_index)
-			return (0);
-		if (ft_strncmp(cube->parsed_file[index], "SO ", 3) == 0
-			&& index != cube->parser.so_tex_index)
-			return (0);
-		if (ft_strncmp(cube->parsed_file[index], "WE ", 3) == 0
-			&& index != cube->parser.we_tex_index)
-			return (0);
-		if (ft_strncmp(cube->parsed_file[index], "EA ", 3) == 0
-			&& index != cube->parser.ea_tex_index)
-			return (0);
-		if (ft_strncmp(cube->parsed_file[index], "F ", 2) == 0
-			&& index != cube->parser.f_index)
-			return (0);
-		if (ft_strncmp(cube->parsed_file[index], "C ", 2) == 0
-			&& index != cube->parser.c_index)
-			return (0);
-		index ++;
-	}
-	return (1);
-}
-
 int	check_file(t_cube *cube)
 {
-	cube->parser.no_tex_index = get_index_of_element("NO ", cube);
-	cube->parser.so_tex_index = get_index_of_element("SO ", cube);
-	cube->parser.we_tex_index = get_index_of_element("WE ", cube);
-	cube->parser.ea_tex_index = get_index_of_element("EA ", cube);
-	cube->parser.f_index = get_index_of_element("F ", cube);
-	cube->parser.c_index = get_index_of_element("C ", cube);
+	cube->parser.no_tex_index = get_index_of_element("NO", cube);
+	cube->parser.so_tex_index = get_index_of_element("SO", cube);
+	cube->parser.we_tex_index = get_index_of_element("WE", cube);
+	cube->parser.ea_tex_index = get_index_of_element("EA", cube);
+	cube->parser.f_index = get_index_of_element("F", cube);
+	cube->parser.c_index = get_index_of_element("C", cube);
 	if (cube->parser.no_tex_index == -1 || cube->parser.so_tex_index == -1
 		|| cube->parser.we_tex_index == -1 || cube->parser.ea_tex_index == -1
 		|| cube->parser.f_index == -1 || cube->parser.c_index == -1)
 		return (ft_printf("Error\n -> Map format error\n"), 0);
 	if (!check_doublon(cube))
 		return (ft_printf("Error\n -> Map format error\n"), 0);
-	if (!check_tex(cube->parsed_file[cube->parser.no_tex_index], "NO ", cube)
-		|| !check_tex(cube->parsed_file[cube->parser.so_tex_index], "SO ", cube)
-		|| !check_tex(cube->parsed_file[cube->parser.we_tex_index], "WE ", cube)
-		|| !check_tex(cube->parsed_file[cube->parser.ea_tex_index], "EA ", cube)
+	if (!check_tex(cube->parsed_file[cube->parser.no_tex_index], "NO", cube)
+		|| !check_tex(cube->parsed_file[cube->parser.so_tex_index], "SO", cube)
+		|| !check_tex(cube->parsed_file[cube->parser.we_tex_index], "WE", cube)
+		|| !check_tex(cube->parsed_file[cube->parser.ea_tex_index], "EA", cube)
 	)
 		return (ft_printf("Error\n -> Texture format error\n"), 0);
 	if (!check_color(cube->parsed_file[cube->parser.f_index], "F ", cube))

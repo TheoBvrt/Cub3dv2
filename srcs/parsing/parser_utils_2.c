@@ -1,25 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   parser_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/18 14:26:36 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/24 16:23:53 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
+int	check_identifier(char *str, char *identifier)
+{
+	int	index;
+
+	index = 0;
+	while (str[index] && str[index] != '\n' && str[index] != identifier[0])
+	{
+		if (!is_wspace(str[index]))
+			return (-1);
+		index ++;
+	}
+	if (ft_strncmp(str + index, identifier, ft_strlen(identifier)) == 0)
+		return (1);
+	return (0);
+}
+
 int	is_map_line(char *str)
 {
-	if (ft_strncmp(str, "NO ", 3) == 0
-		|| ft_strncmp(str, "SO ", 3) == 0
-		|| ft_strncmp(str, "WE ", 3) == 0
-		|| ft_strncmp(str, "EA ", 3) == 0
-		|| ft_strncmp(str, "F ", 2) == 0
-		|| ft_strncmp(str, "C ", 2) == 0
+	if (check_identifier(str, "NO") == 1
+		|| check_identifier(str, "SO") == 1
+		|| check_identifier(str, "WE") == 1
+		|| check_identifier(str, "EA") == 1
+		|| check_identifier(str, "F") == 1
+		|| check_identifier(str, "C") == 1
 		|| str[0] == '\n')
 		return (0);
 	return (1);
@@ -47,27 +63,29 @@ int	get_index_of_element(char *prefix_to_find, t_cube *cube)
 	index = 0;
 	while (index < cube->parser.map_index)
 	{
-		if (ft_strncmp(cube->parsed_file[index],
-				prefix_to_find, ft_strlen(prefix_to_find)) == 0)
+		if (check_identifier(cube->parsed_file[index],
+				prefix_to_find) == 1)
 			return (index);
 		index ++;
 	}
 	return (-1);
 }
 
-// void	set_map_int(t_cube *cube, int f_y, int f_x, int g_y, int g_x)
-// {
-// 	if (cube->parsed_file[f_y][f_x] != '\n')
-// 	{
-// 		if (cube->parsed_file[f_y][f_x] == ' ')
-// 			cube->rendering.map[g_y][g_x] = -1;
-// 		else if (ft_isdigit(cube->parsed_file[f_y][f_x]))
-// 			cube->rendering.map[g_y][g_x]
-// 				= cube->parsed_file[f_y][f_x] - 48;
-// 		else
-// 		{
-// 			set_start_position(f_y, f_x, cube);
-// 			cube->rendering.map[g_y][g_x] = 0;
-// 		}
-// 	}
-// }
+char	*get_after_id(char *str, char *id)
+{
+	char	*res;
+	int		index;
+	int		max;
+
+	index = 0;
+	max = ft_strlen(str) - 2;
+	while (max != 0 && is_wspace(str[max]))
+		max --;
+	while (str[index] && str[index] != '\n' && str[index] != id[0])
+		index ++;
+	index += ft_strlen(id);
+	while (is_wspace(str[index]))
+		index ++;
+	res = ft_substr(str, index, max - index + 1);
+	return (res);
+}
