@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 21:41:21 by theo              #+#    #+#             */
-/*   Updated: 2026/04/18 14:27:13 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/24 16:39:37 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,10 @@ typedef	struct s_parser
 	int	f_index;
 	int	c_index;
 	int	map_index;
+	int	g_x;
+	int	g_y;
+	int	f_x;
+	int	f_y;
 }	t_parser;
 
 
@@ -212,5 +216,11 @@ int		is_map_line(char *str);
 int		get_index_of_map(t_cube *cube);
 void	rotation_to(t_cube *cube, int orientation);
 int		get_index_of_element(char *prefix_to_find, t_cube *cube);
+int		check_identifier(char *str, char *identifier);
+int		is_wspace(char c);
+char	*get_after_id(char *str, char *id);
+int		check_doublon(t_cube *cube);
+int		init(t_cube *cube, t_image *image);
+void	parse_game_map_extend(t_cube *cube);
 
 #endif

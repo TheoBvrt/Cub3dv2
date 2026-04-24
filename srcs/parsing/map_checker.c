@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/18 14:26:32 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/24 15:22:01 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	check_map_format(t_cube *cube)
 	while (cube->parsed_file[y])
 	{
 		x = 0;
+		if (cube->parsed_file[y][0] == '\n')
+			return (ft_printf("Error\n -> Empty line in the map\n"), 0);
 		while (cube->parsed_file[y][x])
 		{
 			if (!is_valid_map_char(cube->parsed_file[y][x]))

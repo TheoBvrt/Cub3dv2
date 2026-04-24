@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/18 14:10:30 by theo             ###   ########.fr       */
+/*   Updated: 2026/04/24 16:39:28 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ static int	get_map_color(t_cube *cube, int line, int *dest)
 	char	*tmp;
 	char	**rgb;
 
-	tmp = ft_substr(cube->parsed_file[line], 2,
-			ft_strlen(cube->parsed_file[line]) - 3);
+	if (line == cube->parser.f_index)
+		tmp = get_after_id(cube->parsed_file[line], "F");
+	else
+		tmp = get_after_id(cube->parsed_file[line], "C");
 	if (!tmp)
 		return (0);
 	rgb = ft_split(tmp, ',');
@@ -33,23 +35,19 @@ static int	get_map_color(t_cube *cube, int line, int *dest)
 static int	get_textures(t_cube *cube)
 {
 	cube->path_texture_north
-		= ft_substr(cube->parsed_file[cube->parser.no_tex_index], 3,
-			ft_strlen(cube->parsed_file[cube->parser.no_tex_index]) - 4);
+		= get_after_id(cube->parsed_file[cube->parser.no_tex_index], "NO");
 	if (!cube->path_texture_north)
 		return (0);
 	cube->path_texture_south
-		= ft_substr(cube->parsed_file[cube->parser.so_tex_index], 3,
-			ft_strlen(cube->parsed_file[cube->parser.so_tex_index]) - 4);
+		= get_after_id(cube->parsed_file[cube->parser.so_tex_index], "SO");
 	if (!cube->path_texture_south)
 		return (0);
 	cube->path_texture_west
-		= ft_substr(cube->parsed_file[cube->parser.we_tex_index], 3,
-			ft_strlen(cube->parsed_file[cube->parser.we_tex_index]) - 4);
+		= get_after_id(cube->parsed_file[cube->parser.we_tex_index], "WE");
 	if (!cube->path_texture_west)
 		return (0);
 	cube->path_texture_east
-		= ft_substr(cube->parsed_file[cube->parser.ea_tex_index], 3,
-			ft_strlen(cube->parsed_file[cube->parser.ea_tex_index]) - 4);
+		= get_after_id(cube->parsed_file[cube->parser.ea_tex_index], "EA");
 	if (!cube->path_texture_east)
 		return (0);
 	return (1);
@@ -57,37 +55,20 @@ static int	get_textures(t_cube *cube)
 
 static void	parse_game_map(t_cube *cube)
 {
-	int	g_x;
-	int	g_y;
-	int	f_x;
-	int	f_y;
-
-	g_y = 0;
-	f_y = cube->parser.map_index;
-	while (cube->parsed_file[f_y])
+	cube->parser.g_y = 0;
+	cube->parser.f_y = cube->parser.map_index;
+	while (cube->parsed_file[cube->parser.f_y])
 	{
-		f_x = 0;
-		g_x = 0;
-		while (cube->parsed_file[f_y][f_x])
+		cube->parser.f_x = 0;
+		cube->parser.g_x = 0;
+		while (cube->parsed_file[cube->parser.f_y][cube->parser.f_x])
 		{
-			if (cube->parsed_file[f_y][f_x] != '\n')
-			{
-				if (cube->parsed_file[f_y][f_x] == ' ')
-					cube->rendering.map[g_y][g_x] = -1;
-				else if (ft_isdigit(cube->parsed_file[f_y][f_x]))
-					cube->rendering.map[g_y][g_x]
-						= cube->parsed_file[f_y][f_x] - 48;
-				else
-				{
-					set_start_position(f_y, f_x, cube);
-					cube->rendering.map[g_y][g_x] = 0;
-				}
-			}
-			f_x ++;
-			g_x ++;
+			parse_game_map_extend(cube);
+			cube->parser.f_x ++;
+			cube->parser.g_x ++;
 		}
-		g_y ++;
-		f_y ++;
+		cube->parser.g_y ++;
+		cube->parser.f_y ++;
 	}
 }
 

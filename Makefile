@@ -11,12 +11,15 @@ SRCS =	./srcs/main.c \
 		./srcs/parsing/map_checker.c \
 		./srcs/utils/utils.c \
 		./srcs/utils/exit.c \
-		./srcs/parsing/parser_utils_2.c
+		./srcs/parsing/parser_utils_2.c \
+		./srcs/parsing/parser_utils_3.c \
+		./srcs/rendering/rotation.c \
+		./srcs/utils/init.c
 
 OBJS = ${SRCS:.c=.o}
 CC = cc
 RM = rm -f
-CFLAGS = -Iheaders -Imlx -g -Wall -Wextra -Werror
+CFLAGS = -Iheaders -Imlx -g -Werror -Wextra -Wall
 
 all : ${NAME}
 
