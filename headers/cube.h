@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 21:41:21 by theo              #+#    #+#             */
-/*   Updated: 2026/04/24 16:39:37 by theo             ###   ########.fr       */
+/*   Updated: 2026/05/04 12:24:24 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ typedef struct s_verline
 	int		color;
 }	t_verline;
 
-typedef	struct s_parser
+typedef struct s_parser
 {
 	int	no_tex_index;
 	int	so_tex_index;
@@ -152,7 +152,6 @@ typedef	struct s_parser
 	int	f_x;
 	int	f_y;
 }	t_parser;
-
 
 typedef struct s_cube
 {
@@ -222,5 +221,6 @@ char	*get_after_id(char *str, char *id);
 int		check_doublon(t_cube *cube);
 int		init(t_cube *cube, t_image *image);
 void	parse_game_map_extend(t_cube *cube);
+int		check_texture_file_type(char *texture);
 
 #endif
