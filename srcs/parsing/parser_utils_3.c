@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 14:45:00 by theo              #+#    #+#             */
-/*   Updated: 2026/04/24 16:39:33 by theo             ###   ########.fr       */
+/*   Updated: 2026/05/04 12:17:16 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,19 @@ int	check_doublon(t_cube *cube)
 			return (0);
 		index ++;
 	}
+	return (1);
+}
+
+int	check_texture_file_type(char *texture)
+{
+	int	index;
+
+	index = ft_strlen(texture) - 1;
+	if (texture[index] != 'm'
+		&& texture[index - 1] != 'p'
+		&& texture[index - 2] != 'x'
+		&& texture[index - 3] != '.'
+	)
+		return (0);
 	return (1);
 }
