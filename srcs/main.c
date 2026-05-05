@@ -19,7 +19,7 @@ int	main(int argc, char *argv[])
 
 	if (argc != 2)
 	{
-		ft_printf("Error : ./cub3d <map.cub>");
+		ft_printf("Error : ./cub3d <map.cub>\n");
 		return (1);
 	}
 	if (!check_file_type(argv[1]))
