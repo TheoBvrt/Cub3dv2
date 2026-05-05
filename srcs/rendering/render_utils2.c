@@ -12,7 +12,7 @@
 
 #include "cube.h"
 
-void	buffer_fill(t_raycasting *ray, unsigned int b[1080][1920])
+void	buffer_fill(t_raycasting *ray, unsigned int **buffer)
 {
 	int	y;
 	int	tex_y;
@@ -24,7 +24,7 @@ void	buffer_fill(t_raycasting *ray, unsigned int b[1080][1920])
 		ray->text_pos += ray->step;
 		ray->color = *(int *)(ray->tex_data
 				+ (tex_y * ray->sl + ray->tex_x * (ray->bpp / 8)));
-		b[y][ray->x] = ray->color;
+		buffer[y][ray->x] = ray->color;
 		y++;
 	}
 }
@@ -57,7 +57,7 @@ void	ray_calculator(t_cube *cube, t_raycasting *ray)
 		* ray->step;
 }
 
-void	draw_ground_sky(t_cube *cube, unsigned int buffer[1080][1920])
+void	draw_ground_sky(t_cube *cube, unsigned int **buffer)
 {
 	int	x;
 	int	y;
@@ -76,4 +76,17 @@ void	draw_ground_sky(t_cube *cube, unsigned int buffer[1080][1920])
 		}
 		y ++;
 	}
+}
+
+void	free_buff(unsigned int **buff)
+{
+	int	i;
+
+	i = 0;
+	while (i < HEIGHT)
+	{
+		free (buff[i]);
+		i ++;
+	}
+	free (buff);
 }

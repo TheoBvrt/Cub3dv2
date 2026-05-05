@@ -46,7 +46,7 @@ void	calculate_deltatime(t_cube *cube)
 	cube->rendering.last_time = curtime;
 }
 
-void	set_buffer(t_cube *cube, unsigned int buffer[1080][1920])
+void	set_buffer(t_cube *cube, unsigned int **buffer)
 {
 	int	y;
 	int	x;

@@ -100,9 +100,12 @@ void	init_ray(t_cube *cube, t_raycasting *ray)
 
 void	raycasting(t_cube *cube, t_raycasting *ray)
 {
-	unsigned int	buffer[HEIGHT][WIDTH];
+	unsigned int	**buffer;
 
-	ft_memset(buffer, 0, sizeof(buffer));
+	buffer = ft_calloc(HEIGHT, sizeof(unsigned int *));
+	ray->x = 0;
+	while (ray->x < HEIGHT)
+		buffer[ray->x++] = ft_calloc(WIDTH, sizeof(unsigned int));
 	ray->x = 0;
 	draw_ground_sky(cube, buffer);
 	while (ray->x < WIDTH)
@@ -119,4 +122,5 @@ void	raycasting(t_cube *cube, t_raycasting *ray)
 	set_buffer(cube, buffer);
 	mlx_put_image_to_window(cube->mlx, cube->mlx_win,
 		cube->image->img, 0, 0);
+	free_buff(buffer);
 }
