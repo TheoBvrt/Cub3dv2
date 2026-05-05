@@ -38,4 +38,6 @@ fclean: clean
 	${RM} ${NAME}
 	make fclean -C ./libft
 
+bonus:all
+
 re: fclean all
