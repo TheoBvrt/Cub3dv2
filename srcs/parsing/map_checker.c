@@ -39,7 +39,7 @@ static int	check_start_position(t_cube *cube)
 	while (y < cube->map_size)
 	{
 		x = 0;
-		while (x < cube->map_length)
+		while (cube->parsed_file[y][x] && cube->parsed_file[y][x] != '\n')
 		{
 			if (is_start_position(cube, cube->parsed_file[y][x]))
 				counter ++;

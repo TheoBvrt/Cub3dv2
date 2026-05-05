@@ -56,7 +56,7 @@ static int	check_color_format(char *str)
 		index++;
 	}
 	if (comas_counter != 2)
-		return (ft_printf("Error\n -> Color error\n"), 0);
+		return (0);
 	return (1);
 }
 
@@ -78,7 +78,7 @@ static int	check_color(char *str, char *prefix, t_cube *cube)
 	values = ft_split(tmp, ',');
 	if (!values)
 		return (free(tmp), 0);
-	if (!values[1] || !values[0] || !values[2])
+	if (!values[0] || !values[1] || !values[2])
 		return (free(tmp), free_tab(values), 0);
 	if (ft_atoi(values[0]) > 255 || ft_atoi(values[1]) > 255
 		|| ft_atoi(values[2]) > 255)
